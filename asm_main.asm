@@ -31,7 +31,7 @@ Message3 db	", ", 0
 ; uninitialized data is put in the .bss segment
 ;
 segment .bss
-;a1	resw 10
+
 scalar	resd 1
 
 
@@ -44,6 +44,24 @@ asm_main:
         enter   0,0               ; setup routine
         pusha
 ; *********** Start  Assignment Code *******************
+	mov     eax,a1
+        push    eax
+        mov     eax,10
+        push    eax
+        mov     eax,5
+        push    eax
+        call    scalar_mult
+        add     esp,12
+
+	popa
+        mov     eax, 0            ; return back to C
+        leave
+        ret
+
+scalar_mult:
+        enter   0,0               ;setup routine
+        pusha 
+
 	mov	eax, Message1
 	call	print_string
 	call	read_int
@@ -53,20 +71,20 @@ asm_main:
 	imul	eax, [scalar]	  		  ; ebx =  eax*scalar
 	mov	[a1], eax
 
-	mov     eax, [a1+4]               ; al = a1[0] +4 goes to the next number
-        imul    eax, [scalar]                     ; ebx =  eax*scalar
+	mov     eax, [a1+4]  
+        imul    eax, [scalar]
         mov     [a1+4], eax
 
-	mov     eax, [a1+8]               ; al = a1[0] +4 goes to the next number
-        imul    eax, [scalar]                     ; ebx =  eax*scalar
+	mov     eax, [a1+8]  
+        imul    eax, [scalar]
         mov     [a1+8], eax
 
-	mov     eax, [a1+12]              ; al = a1[0] +4 goes to the next number
-        imul    eax, [scalar]                     ; ebx =  eax*scalar
+	mov     eax, [a1+12]
+        imul    eax, [scalar]
         mov     [a1+12], eax
 
-	mov     eax, [a1+16]              ; al = a1[0] +4 goes to the next number
-        imul    eax, [scalar]                     ; ebx =  eax*scalar
+	mov     eax, [a1+16] 
+        imul    eax, [scalar]
         mov     [a1+16], eax
 
 
