@@ -21,8 +21,8 @@ segment .data
         SUCCESS: equ 0
         kernelcall: equ 80h
 
-; define array of 5 words initialized to 1,2,3,4,5
-a1	 dd	 1 ,2, 3, 4, 5	  ;  array of words
+; define array of 10 words initialized to 1,2,3,...,10
+a1	 dd	 1 ,2, 3, 4, 5, 6, 7, 8, 9, 10	  ;  array of words
 Message1 db	"Enter an integer(a scalar): ", 0
 Message2 db	"The result would be ", 0
 Message3 db	", ", 0
@@ -87,6 +87,25 @@ scalar_mult:
         imul    eax, [scalar]
         mov     [a1+16], eax
 
+	mov     eax, [a1+20] 
+        imul    eax, [scalar]
+        mov     [a1+20], eax
+
+        mov     eax, [a1+24]
+        imul    eax, [scalar]
+        mov     [a1+24], eax
+
+        mov     eax, [a1+28]
+        imul    eax, [scalar]
+        mov     [a1+28], eax
+
+        mov     eax, [a1+32]
+        imul    eax, [scalar]
+        mov     [a1+32], eax
+
+        mov     eax, [a1+36]
+        imul    eax, [scalar]
+        mov     [a1+36], eax
 
 	mov	eax, Message2
 	call	print_string
@@ -112,6 +131,31 @@ scalar_mult:
         call    print_string
 
 	mov     eax, [a1+16]
+        call    print_int
+	mov     eax, Message3
+        call    print_string
+	
+	mov     eax, [a1+20]
+        call    print_int
+        mov     eax, Message3
+        call    print_string
+
+        mov     eax, [a1+24]
+        call    print_int
+        mov     eax, Message3
+        call    print_string
+
+        mov     eax, [a1+28]
+        call    print_int
+        mov     eax, Message3
+        call    print_string
+
+        mov     eax, [a1+32]
+        call    print_int
+        mov     eax, Message3
+        call    print_string
+
+        mov     eax, [a1+36]
         call    print_int
 
 	call	print_nl
